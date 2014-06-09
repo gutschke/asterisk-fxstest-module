@@ -1,4 +1,5 @@
 #!/bin/bash -e
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 asterisk -x 'module load fxstest.so' >&/dev/null || :
 
@@ -16,7 +17,7 @@ is_stuck() {
 }
 
 refresh_fxs dat
-for i in 1 2 3; do
+for i in 0 1 2; do
   if is_stuck "${dat[$i]}"; then
     asterisk -x 'core show calls' 2>/dev/null |
      egrep '^0 active calls' >&/dev/null || exit 0
